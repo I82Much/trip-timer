@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start">Start timer</string>
+    <string name="app_name">TripTimer</string>
+<string name="stop">Stop timer</string>
+<string name="reset">Reset trip timer</string>
+</resources>
