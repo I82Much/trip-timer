@@ -4,4 +4,5 @@
     <string name="app_name">TripTimer</string>
 <string name="stop">Stop timer</string>
 <string name="reset">Reset trip timer</string>
+<string name="empty_time">0:00</string>
 </resources>
