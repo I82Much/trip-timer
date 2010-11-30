@@ -16,7 +16,8 @@ public class TripTimer extends Activity {
 	private Date pauseTimeStart;
 	private Date pauseTimeEnd;
 	private Date endTime;
-	
+	// Blink once a second while paused
+	private static final long BLINK_PERIOD = 1000;
 	private long elapsedPauseTime = 0;
 	
 	private long startUptimeMs;
@@ -59,6 +60,19 @@ public class TripTimer extends Activity {
  	    		   SystemClock.uptimeMillis() + 1000);
  	   }
  	};
+ 	
+ 	private Runnable flashClock = new Runnable() {
+ 		public void run() {
+ 			if (digitalClock.getVisibility() == View.INVISIBLE) {
+ 				digitalClock.setVisibility(View.VISIBLE);
+ 			}
+ 			else {
+ 				digitalClock.setVisibility(View.INVISIBLE);
+ 			}
+ 			mHandler.postAtTime(this,
+  	    		   SystemClock.uptimeMillis() + BLINK_PERIOD);
+ 		}
+ 	};
     
     public void startOrPause(View view) {
     	switch (curState) {
@@ -91,10 +105,14 @@ public class TripTimer extends Activity {
     	pauseTimeStart = new Date();
     	startPauseButton.setText(R.string.resume);
     	mHandler.removeCallbacks(mUpdateTimeTask);
+    	mHandler.post(flashClock);
     	curState = TimerState.PAUSED;
     }
     
     private void resumeClock() {
+    	digitalClock.setVisibility(View.VISIBLE);
+    	mHandler.removeCallbacks(flashClock);
+    	
     	pauseTimeEnd = new Date();
     	elapsedPauseTime += pauseTimeEnd.getTime() - pauseTimeStart.getTime();
     	startPauseButton.setText(R.string.pause);
@@ -104,6 +122,8 @@ public class TripTimer extends Activity {
     }
     
     private void resetClock() {
+    	digitalClock.setVisibility(View.VISIBLE);
+    	mHandler.removeCallbacks(flashClock);
     	startTime = null;
 		endTime = null;
 		pauseTimeStart = null;
@@ -118,7 +138,8 @@ public class TripTimer extends Activity {
     
     private void stopClock() {
 		endTime = new Date();
-		
+		digitalClock.setVisibility(View.VISIBLE);
+		mHandler.removeCallbacks(flashClock);
 		
 		// If we are paused and we stop without resuming first, we never update
 		// the amount of time paused.
