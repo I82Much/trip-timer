@@ -8,4 +8,7 @@
         <item name="android:typeface">monospace</item>
         <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
+    <style name="Button" parent="@android:style/Widget.Button">
+    	
+    </style>
 </resources>
