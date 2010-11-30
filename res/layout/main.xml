@@ -6,8 +6,7 @@
     >
     <TextView 
     	android:id="@+id/digitalClock"
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
+    	style="@style/DigitalClock"
     	android:text="@string/empty_time"
     />
     <Button
@@ -15,5 +14,6 @@
 	     android:layout_height="fill_parent"
 	     android:layout_width="fill_parent"
 	     android:text="@string/start"
-	     android:onClick="toggleTime" />
+	     android:onClick="toggleTime" 
+	/>
 </LinearLayout>
